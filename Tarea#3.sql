@@ -68,24 +68,22 @@ END;
 
 --Ejercicio #2 - FUNCIONES
 
+
 CREATE OR REPLACE FUNCTION CREAR_REGION
-    (nameRegion IN COUNTRIES.COUNTRY_NAME%TYPE) 
+    (nameRegion IN VARCHAR2) 
 RETURN NUMBER 
 IS
     indMax NUMBER:=0;
     codRegion NUMBER:=0;
-    country CHAR;
 BEGIN
 SELECT MAX(Region_ID)INTO indMax FROM COUNTRIES;
 codRegion:=(indMax+1);
-return codRegion;
-country:= UPPER(SUBSTR(nameRegion,1,2));
 
-INSERT INTO countries VALUES(   
-          country
-        , nameRegion  
-        , codRegion  
+INSERT INTO REGIONS VALUES(   
+            codRegion  
+            ,nameRegion  
         );  
+return codRegion;
 EXCEPTION
     WHEN NO_DATA_FOUND THEN
        DBMS_OUTPUT.PUT_line('NO EXISTE');
@@ -98,6 +96,8 @@ begin
     R:= CREAR_REGION('HONDURAS');
  DBMS_OUTPUT.PUT_LINE('El nuevo indice es de:'||R);
 end;
+
+SELECT * FROM REGIONS; 
 
 --Ejercicio #3 - PROCEDIMIENTOS inciso a
 
@@ -125,7 +125,7 @@ BEGIN
             res:=num1/num2; 
         DBMS_OUTPUT.PUT_LINE(num1 || ' / ' || num2  || ' = ' ||res);
         else
-            DBMS_OUTPUT.PUT_LINE('Operación invalida');
+            DBMS_OUTPUT.PUT_LINE('OperaciÃ³n invalida');
         END CASE;
 END;
 
