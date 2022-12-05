@@ -1,0 +1,49 @@
+--Ejercicio #1:
+
+with tabl as (
+  select 
+  name
+  ,gender
+  ,sum(number) as Suma
+  from bigquery-public-data.usa_names.usa_1910_2013
+  group by
+        name
+        ,gender
+)
+
+select * from tabl order by Suma DESC
+
+--Ejercicio #2:
+
+select 
+  date
+  ,state
+  ,tests_total
+  ,cases_positive_total
+  ,SUM(tests_total) over (PARTITION BY state) sumaTotal
+ from bigquery-public-data.covid19_covidtracking.summary 
+
+--Ejercicio #3:
+
+select 
+  channelGrouping
+  ,pageviews
+  ,pageviews/ sum(pageviews) over consulta as porcentaje_del_total
+  ,avg(pageviews) over consulta as promedio
+from(
+  select 
+  date
+  ,channelGrouping
+  ,sum(totals.pageViews) as pageviews
+  from bigquery-public-data.google_analytics_sample.ga_sessions_20170801
+  group by
+  date
+  ,channelGrouping
+)
+WINDOW consulta as (partition by date)
+
+--Ejercicio #4
+
+
+
+ 
