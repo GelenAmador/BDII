@@ -44,6 +44,17 @@ WINDOW consulta as (partition by date)
 
 --Ejercicio #4
 
+with c as(
+select 
+  Region
+  ,Country
+  ,SUM(total_Revenue) over (PARTITION By Country) totals_Revenue
+from BD2.sales
+)
+select 
+  *
+  ,RANK() OVER(ORDER BY totals_Revenue ASC) ranki
+  from c order by Region ASC
 
 
  
