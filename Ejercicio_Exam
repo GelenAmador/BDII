@@ -1,0 +1,15 @@
+with tabl as (
+select 
+  county
+  ,category_name
+  ,SUM(sale_dollars) total
+ from bigquery-public-data.iowa_liquor_sales.sales 
+ group by 
+    county
+    ,category_name
+)
+
+select 
+  *
+  ,RANK() OVER( ORDER BY total desc) ranki
+from tabl where county='ADAIR' order by ranki asc 
